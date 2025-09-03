@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Member Loading Test</title>
+    <style>
+        body { font-family: Arial, sans-serif; padding: 20px; }
+        .error { color: red; }
+        .success { color: green; }
+        .member-count { font-weight: bold; color: blue; }
+    </style>
+</head>
+<body>
+    <h1>Member Loading Test</h1>
+    <div id="status">Testing...</div>
+    <div id="results"></div>
+
+    <script>
+        console.log('Test started...');
+        
+        // Test if localStorage has any data
+        const membersData = localStorage.getItem('sacco_members');
+        const statusDiv = document.getElementById('status');
+        const resultsDiv = document.getElementById('results');
+        
+        if (membersData) {
+            try {
+                const members = JSON.parse(membersData);
+                statusDiv.innerHTML = `<span class="success">✓ Members found in localStorage!</span>`;
+                resultsDiv.innerHTML = `
+                    <h3>Found <span class="member-count">${members.length}</span> members:</h3>
+                    <ul>
+                        ${members.map(member => `<li>${member.fullName} (${member.id}) - ${member.status}</li>`).join('')}
+                    </ul>
+                `;
+            } catch (e) {
+                statusDiv.innerHTML = `<span class="error">✗ Error parsing members data: ${e.message}</span>`;
+            }
+        } else {
+            statusDiv.innerHTML = `<span class="error">✗ No members data found in localStorage</span>`;
+            resultsDiv.innerHTML = `
+                <p>This means the app hasn't initialized yet. Let's try to load the app:</p>
+                <button onclick="loadApp()">Load SACCO App</button>
+            `;
+        }
+        
+        function loadApp() {
+            console.log('Loading SACCO app...');
+            const script = document.createElement('script');
+            script.src = 'assets/js/app.js';
+            document.head.appendChild(script);
+            
+            script.onload = function() {
+                console.log('App script loaded');
+                // Wait for app to initialize
+                setTimeout(() => {
+                    if (window.saccoApp && window.saccoApp.initialized) {
+                        const members = window.saccoApp.getMembers();
+                        resultsDiv.innerHTML = `
+                            <h3 class="success">App loaded! Found ${members.length} members:</h3>
+                            <ul>
+                                ${members.map(member => `<li>${member.fullName} (${member.id}) - ${member.status}</li>`).join('')}
+                            </ul>
+                        `;
+                    } else {
+                        resultsDiv.innerHTML = `<span class="error">App loaded but not initialized</span>`;
+                    }
+                }, 1000);
+            };
+        }
+        
+        // Test if the app is already loaded
+        if (window.saccoApp) {
+            console.log('SACCO app already loaded');
+            if (window.saccoApp.initialized) {
+                const members = window.saccoApp.getMembers();
+                statusDiv.innerHTML = `<span class="success">✓ App already running!</span>`;
+                resultsDiv.innerHTML = `
+                    <h3>Found <span class="member-count">${members.length}</span> members via app:</h3>
+                    <ul>
+                        ${members.map(member => `<li>${member.fullName} (${member.id}) - ${member.status}</li>`).join('')}
+                    </ul>
+                `;
+            }
+        }
+    </script>
+</body>
+</html>

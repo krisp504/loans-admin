@@ -1,0 +1,119 @@
+[
+  {
+    "id": "MEM001",
+    "fullName": "Joseph Ngamau",
+    "phone": "",
+    "email": "",
+    "dateJoined": "2024-01-15",
+    "status": "Active",
+    "notes": "Founding member"
+  },
+  {
+    "id": "MEM002",
+    "fullName": "Gerald Gitau",
+    "phone": "",
+    "email": "",
+    "dateJoined": "2024-01-15",
+    "status": "Active",
+    "notes": "Founding member"
+  },
+  {
+    "id": "MEM003",
+    "fullName": "Samuel Ndumia",
+    "phone": "",
+    "email": "",
+    "dateJoined": "2024-01-15",
+    "status": "Active",
+    "notes": "Founding member"
+  },
+  {
+    "id": "MEM004",
+    "fullName": "Anthony Maina",
+    "phone": "",
+    "email": "",
+    "dateJoined": "2024-01-20",
+    "status": "Active",
+    "notes": ""
+  },
+  {
+    "id": "MEM005",
+    "fullName": "Morgan Gitau",
+    "phone": "",
+    "email": "",
+    "dateJoined": "2024-01-20",
+    "status": "Active",
+    "notes": ""
+  },
+  {
+    "id": "MEM006",
+    "fullName": "James Waweru",
+    "phone": "",
+    "email": "",
+    "dateJoined": "2024-01-25",
+    "status": "Active",
+    "notes": ""
+  },
+  {
+    "id": "MEM007",
+    "fullName": "Samson Mbuu",
+    "phone": "",
+    "email": "",
+    "dateJoined": "2024-01-25",
+    "status": "Active",
+    "notes": ""
+  },
+  {
+    "id": "MEM008",
+    "fullName": "Elijah Kibicho",
+    "phone": "",
+    "email": "",
+    "dateJoined": "2024-02-01",
+    "status": "Active",
+    "notes": ""
+  },
+  {
+    "id": "MEM009",
+    "fullName": "John Njenga",
+    "phone": "",
+    "email": "",
+    "dateJoined": "2024-02-01",
+    "status": "Active",
+    "notes": ""
+  },
+  {
+    "id": "MEM010",
+    "fullName": "James Gitau",
+    "phone": "",
+    "email": "",
+    "dateJoined": "2024-02-05",
+    "status": "Active",
+    "notes": ""
+  },
+  {
+    "id": "MEM011",
+    "fullName": "Michael Gichiri",
+    "phone": "",
+    "email": "",
+    "dateJoined": "2024-02-10",
+    "status": "Active",
+    "notes": ""
+  },
+  {
+    "id": "MEM012",
+    "fullName": "Joseph Mugo",
+    "phone": "",
+    "email": "",
+    "dateJoined": "2024-02-10",
+    "status": "Active",
+    "notes": ""
+  },
+  {
+    "id": "MEM013",
+    "fullName": "James Kamau",
+    "phone": "",
+    "email": "",
+    "dateJoined": "2024-02-15",
+    "status": "Active",
+    "notes": ""
+  }
+]

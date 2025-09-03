@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SACCO Loan Management System - Dashboard</title>
+    <link rel="stylesheet" href="assets/css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <div class="app-container">
+        <!-- Sidebar Navigation -->
+        <nav class="sidebar">
+            <div class="sidebar-header">
+                <h3><i class="fas fa-university"></i> SACCO Admin</h3>
+            </div>
+            <ul class="sidebar-menu">
+                <li><a href="index.html" class="active"><i class="fas fa-tachometer-alt"></i> Dashboard</a></li>
+                <li><a href="members.html"><i class="fas fa-users"></i> Members</a></li>
+                <li><a href="loans.html"><i class="fas fa-money-bill-wave"></i> Loans</a></li>
+                <li><a href="reports.html"><i class="fas fa-chart-bar"></i> Reports</a></li>
+                <li><a href="settings.html"><i class="fas fa-cog"></i> Settings</a></li>
+                <li><a href="activity-logs.html"><i class="fas fa-history"></i> Activity Logs</a></li>
+            </ul>
+        </nav>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- Header -->
+            <header class="header">
+                <h1>Dashboard</h1>
+                <div class="user-info">
+                    <span>Welcome, Admin</span>
+                    <i class="fas fa-user-circle"></i>
+                </div>
+            </header>
+
+            <!-- Dashboard Content -->
+            <div class="dashboard-content">
+                <!-- Analytics Cards -->
+                <div class="analytics-grid">
+                    <div class="analytics-card">
+                        <div class="card-icon loans-disbursed">
+                            <i class="fas fa-hand-holding-usd"></i>
+                        </div>
+                        <div class="card-info">
+                            <h3 id="totalDisbursed">KES 0</h3>
+                            <p>Total Loans Disbursed</p>
+                        </div>
+                    </div>
+
+                    <div class="analytics-card">
+                        <div class="card-icon interest-earned">
+                            <i class="fas fa-percentage"></i>
+                        </div>
+                        <div class="card-info">
+                            <h3 id="totalInterestEarned">KES 0</h3>
+                            <p>Total Interest Earned</p>
+                        </div>
+                    </div>
+
+                    <div class="analytics-card">
+                        <div class="card-icon overdue">
+                            <i class="fas fa-exclamation-triangle"></i>
+                        </div>
+                        <div class="card-info">
+                            <h3 id="totalOverdue">KES 0</h3>
+                            <p>Total Overdue</p>
+                        </div>
+                    </div>
+
+                    <div class="analytics-card">
+                        <div class="card-icon active-members">
+                            <i class="fas fa-users"></i>
+                        </div>
+                        <div class="card-info">
+                            <h3 id="activeMembers">0</h3>
+                            <p>Active Members</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Charts and Tables Section -->
+                <div class="dashboard-grid">
+                    <!-- Recent Loans -->
+                    <div class="dashboard-section">
+                        <div class="section-header">
+                            <h3>Recent Loans</h3>
+                            <a href="loans.html" class="view-all-link">View All</a>
+                        </div>
+                        <div class="table-container">
+                            <table class="data-table">
+                                <thead>
+                                    <tr>
+                                        <th>Loan ID</th>
+                                        <th>Member</th>
+                                        <th>Amount</th>
+                                        <th>Status</th>
+                                        <th>Due Date</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="recentLoansTable">
+                                    <!-- Dynamic content -->
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                    <!-- Member Statistics -->
+                    <div class="dashboard-section">
+                        <div class="section-header">
+                            <h3>Member Overview</h3>
+                        </div>
+                        <div class="member-stats">
+                            <div class="stat-item">
+                                <span class="stat-label">Total Members:</span>
+                                <span class="stat-value" id="totalMembers">13</span>
+                            </div>
+                            <div class="stat-item">
+                                <span class="stat-label">Active Loans:</span>
+                                <span class="stat-value" id="activeLoans">0</span>
+                            </div>
+                            <div class="stat-item">
+                                <span class="stat-label">Completed Loans:</span>
+                                <span class="stat-value" id="completedLoans">0</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Quick Actions -->
+                <div class="quick-actions">
+                    <h3>Quick Actions</h3>
+                    <div class="action-buttons">
+                        <button class="btn btn-primary" onclick="window.location.href='loans.html?action=add'">
+                            <i class="fas fa-plus"></i> Add New Loan
+                        </button>
+                        <button class="btn btn-secondary" onclick="window.location.href='members.html?action=add'">
+                            <i class="fas fa-user-plus"></i> Add New Member
+                        </button>
+                        <button class="btn btn-info" onclick="window.location.href='reports.html'">
+                            <i class="fas fa-file-export"></i> Generate Report
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script src="assets/js/app.js"></script>
+    <script src="assets/js/dashboard.js"></script>
+</body>
+</html>

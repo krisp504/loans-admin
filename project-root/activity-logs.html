@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SACCO Loan Management System - Activity Logs</title>
+    <link rel="stylesheet" href="assets/css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <div class="app-container">
+        <!-- Sidebar Navigation -->
+        <nav class="sidebar">
+            <div class="sidebar-header">
+                <h3><i class="fas fa-university"></i> SACCO Admin</h3>
+            </div>
+            <ul class="sidebar-menu">
+                <li><a href="index.html"><i class="fas fa-tachometer-alt"></i> Dashboard</a></li>
+                <li><a href="members.html"><i class="fas fa-users"></i> Members</a></li>
+                <li><a href="loans.html"><i class="fas fa-money-bill-wave"></i> Loans</a></li>
+                <li><a href="reports.html"><i class="fas fa-chart-bar"></i> Reports</a></li>
+                <li><a href="settings.html"><i class="fas fa-cog"></i> Settings</a></li>
+                <li><a href="activity-logs.html" class="active"><i class="fas fa-history"></i> Activity Logs</a></li>
+            </ul>
+        </nav>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- Header -->
+            <header class="header">
+                <h1>Activity Logs</h1>
+                <div class="header-actions">
+                    <button class="btn btn-info" onclick="exportLogs()">
+                        <i class="fas fa-download"></i> Export Logs
+                    </button>
+                    <button class="btn btn-warning" onclick="confirmClearLogs()">
+                        <i class="fas fa-trash"></i> Clear Old Logs
+                    </button>
+                </div>
+            </header>
+
+            <!-- Activity Logs Content -->
+            <div class="page-content">
+                <!-- Log Statistics -->
+                <div class="log-stats">
+                    <div class="stat-card">
+                        <div class="stat-icon member-actions">
+                            <i class="fas fa-users"></i>
+                        </div>
+                        <div class="stat-info">
+                            <h3 id="memberActionsCount">0</h3>
+                            <p>Member Actions</p>
+                        </div>
+                    </div>
+
+                    <div class="stat-card">
+                        <div class="stat-icon loan-actions">
+                            <i class="fas fa-money-bill-wave"></i>
+                        </div>
+                        <div class="stat-info">
+                            <h3 id="loanActionsCount">0</h3>
+                            <p>Loan Actions</p>
+                        </div>
+                    </div>
+
+                    <div class="stat-card">
+                        <div class="stat-icon payment-actions">
+                            <i class="fas fa-credit-card"></i>
+                        </div>
+                        <div class="stat-info">
+                            <h3 id="paymentActionsCount">0</h3>
+                            <p>Payment Actions</p>
+                        </div>
+                    </div>
+
+                    <div class="stat-card">
+                        <div class="stat-icon system-actions">
+                            <i class="fas fa-cog"></i>
+                        </div>
+                        <div class="stat-info">
+                            <h3 id="systemActionsCount">0</h3>
+                            <p>System Actions</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Filter and Search -->
+                <div class="search-filter-section">
+                    <div class="search-box">
+                        <i class="fas fa-search"></i>
+                        <input type="text" id="logSearch" placeholder="Search activity logs..." onkeyup="filterLogs()">
+                    </div>
+                    <div class="filter-options">
+                        <select id="actionTypeFilter" onchange="filterLogs()">
+                            <option value="">All Actions</option>
+                            <option value="Member">Member Actions</option>
+                            <option value="Loan">Loan Actions</option>
+                            <option value="Payment">Payment Actions</option>
+                            <option value="System">System Actions</option>
+                        </select>
+                        <select id="dateRangeFilter" onchange="filterLogs()">
+                            <option value="">All Time</option>
+                            <option value="today">Today</option>
+                            <option value="week">This Week</option>
+                            <option value="month">This Month</option>
+                            <option value="custom">Custom Range</option>
+                        </select>
+                    </div>
+                </div>
+
+                <!-- Custom Date Range -->
+                <div id="customDateRange" class="custom-date-range" style="display: none;">
+                    <div class="date-inputs">
+                        <input type="date" id="startDate" onchange="filterLogs()">
+                        <span>to</span>
+                        <input type="date" id="endDate" onchange="filterLogs()">
+                    </div>
+                </div>
+
+                <!-- Activity Logs Table -->
+                <div class="table-section">
+                    <div class="table-container">
+                        <table class="data-table">
+                            <thead>
+                                <tr>
+                                    <th>Timestamp</th>
+                                    <th>Action Type</th>
+                                    <th>Action</th>
+                                    <th>Details</th>
+                                    <th>User</th>
+                                    <th>Status</th>
+                                </tr>
+                            </thead>
+                            <tbody id="activityLogsTable">
+                                <!-- Dynamic content -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- Pagination -->
+                <div class="pagination-section">
+                    <div class="pagination-info">
+                        <span id="paginationInfo">Showing 0 of 0 entries</span>
+                    </div>
+                    <div class="pagination-controls">
+                        <button class="btn btn-secondary" id="prevBtn" onclick="previousPage()" disabled>
+                            <i class="fas fa-chevron-left"></i> Previous
+                        </button>
+                        <span id="pageNumbers"></span>
+                        <button class="btn btn-secondary" id="nextBtn" onclick="nextPage()" disabled>
+                            Next <i class="fas fa-chevron-right"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- Log Details Modal -->
+    <div id="logDetailsModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Activity Log Details</h3>
+                <span class="close" onclick="closeLogDetailsModal()">&times;</span>
+            </div>
+            <div class="log-details-content">
+                <div class="detail-group">
+                    <label>Timestamp:</label>
+                    <span id="detailTimestamp"></span>
+                </div>
+                <div class="detail-group">
+                    <label>Action Type:</label>
+                    <span id="detailActionType"></span>
+                </div>
+                <div class="detail-group">
+                    <label>Action:</label>
+                    <span id="detailAction"></span>
+                </div>
+                <div class="detail-group">
+                    <label>User:</label>
+                    <span id="detailUser"></span>
+                </div>
+                <div class="detail-group">
+                    <label>Status:</label>
+                    <span id="detailStatus"></span>
+                </div>
+                <div class="detail-group">
+                    <label>Details:</label>
+                    <div id="detailDescription" class="detail-description"></div>
+                </div>
+                <div class="detail-group" id="relatedDataGroup" style="display: none;">
+                    <label>Related Data:</label>
+                    <pre id="relatedData" class="related-data"></pre>
+                </div>
+            </div>
+            <div class="form-actions">
+                <button type="button" class="btn btn-secondary" onclick="closeLogDetailsModal()">Close</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Clear Logs Confirmation Modal -->
+    <div id="clearLogsModal" class="modal">
+        <div class="modal-content small-modal">
+            <div class="modal-header">
+                <h3>Clear Activity Logs</h3>
+                <span class="close" onclick="closeClearLogsModal()">&times;</span>
+            </div>
+            <div class="confirm-content">
+                <div class="warning-message">
+                    <i class="fas fa-exclamation-triangle"></i>
+                    <p>This action will permanently delete activity logs older than the selected period. This cannot be undone.</p>
+                </div>
+                <div class="form-group">
+                    <label for="clearPeriod">Clear logs older than:</label>
+                    <select id="clearPeriod">
+                        <option value="30">30 days</option>
+                        <option value="60">60 days</option>
+                        <option value="90">90 days</option>
+                        <option value="180">6 months</option>
+                        <option value="365">1 year</option>
+                    </select>
+                </div>
+                <div class="form-actions">
+                    <button type="button" class="btn btn-secondary" onclick="closeClearLogsModal()">Cancel</button>
+                    <button type="button" class="btn btn-danger" onclick="executeClearLogs()">Clear Logs</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="assets/js/app.js"></script>
+    <script src="assets/js/activity-logs.js"></script>
+</body>
+</html>

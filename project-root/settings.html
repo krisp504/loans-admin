@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SACCO Loan Management System - Settings</title>
+    <link rel="stylesheet" href="assets/css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <div class="app-container">
+        <!-- Sidebar Navigation -->
+        <nav class="sidebar">
+            <div class="sidebar-header">
+                <h3><i class="fas fa-university"></i> SACCO Admin</h3>
+            </div>
+            <ul class="sidebar-menu">
+                <li><a href="index.html"><i class="fas fa-tachometer-alt"></i> Dashboard</a></li>
+                <li><a href="members.html"><i class="fas fa-users"></i> Members</a></li>
+                <li><a href="loans.html"><i class="fas fa-money-bill-wave"></i> Loans</a></li>
+                <li><a href="reports.html"><i class="fas fa-chart-bar"></i> Reports</a></li>
+                <li><a href="settings.html" class="active"><i class="fas fa-cog"></i> Settings</a></li>
+                <li><a href="activity-logs.html"><i class="fas fa-history"></i> Activity Logs</a></li>
+            </ul>
+        </nav>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- Header -->
+            <header class="header">
+                <h1>System Settings</h1>
+            </header>
+
+            <!-- Settings Content -->
+            <div class="page-content">
+                <div class="settings-container">
+                    <!-- General Settings -->
+                    <div class="settings-section">
+                        <div class="section-header">
+                            <h3><i class="fas fa-cog"></i> General Settings</h3>
+                        </div>
+                        <form id="generalSettingsForm">
+                            <div class="form-group">
+                                <label for="saccoName">SACCO Name</label>
+                                <input type="text" id="saccoName" value="My SACCO">
+                            </div>
+                            <div class="form-group">
+                                <label for="defaultInterestRate">Default Interest Rate (%)</label>
+                                <input type="number" id="defaultInterestRate" value="10" min="0" max="100" step="0.1">
+                            </div>
+                            <div class="form-group">
+                                <label for="currency">Currency</label>
+                                <select id="currency">
+                                    <option value="KES">KES (Kenyan Shilling)</option>
+                                    <option value="USD">USD (US Dollar)</option>
+                                    <option value="EUR">EUR (Euro)</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="maxLoanAmount">Maximum Loan Amount</label>
+                                <input type="number" id="maxLoanAmount" value="1000000" min="1000" step="1000">
+                            </div>
+                            <div class="form-group">
+                                <label for="maxRepaymentPeriod">Maximum Repayment Period (months)</label>
+                                <input type="number" id="maxRepaymentPeriod" value="60" min="1" max="120">
+                            </div>
+                            <div class="form-actions">
+                                <button type="submit" class="btn btn-primary">Save General Settings</button>
+                            </div>
+                        </form>
+                    </div>
+
+                    <!-- Data Management -->
+                    <div class="settings-section">
+                        <div class="section-header">
+                            <h3><i class="fas fa-database"></i> Data Management</h3>
+                        </div>
+                        <div class="data-management">
+                            <div class="management-item">
+                                <div class="item-info">
+                                    <h4>Backup Data</h4>
+                                    <p>Download a backup of all your SACCO data</p>
+                                </div>
+                                <button class="btn btn-info" onclick="backupData()">
+                                    <i class="fas fa-download"></i> Download Backup
+                                </button>
+                            </div>
+
+                            <div class="management-item">
+                                <div class="item-info">
+                                    <h4>Import Data</h4>
+                                    <p>Restore data from a backup file</p>
+                                </div>
+                                <button class="btn btn-warning" onclick="importData()">
+                                    <i class="fas fa-upload"></i> Import Backup
+                                </button>
+                            </div>
+
+                            <div class="management-item danger-zone">
+                                <div class="item-info">
+                                    <h4>Clear All Data</h4>
+                                    <p>⚠️ This will permanently delete all members, loans, and activity logs</p>
+                                </div>
+                                <button class="btn btn-danger" onclick="confirmClearAllData()">
+                                    <i class="fas fa-trash"></i> Clear All Data
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Selective Data Deletion -->
+                    <div class="settings-section">
+                        <div class="section-header">
+                            <h3><i class="fas fa-eraser"></i> Selective Data Management</h3>
+                        </div>
+                        <div class="selective-deletion">
+                            <div class="deletion-item">
+                                <div class="item-info">
+                                    <h4>Delete Completed Loans</h4>
+                                    <p>Remove all completed loans from the system</p>
+                                </div>
+                                <button class="btn btn-warning" onclick="confirmDeleteCompletedLoans()">
+                                    <i class="fas fa-trash-alt"></i> Delete Completed Loans
+                                </button>
+                            </div>
+
+                            <div class="deletion-item">
+                                <div class="item-info">
+                                    <h4>Delete Inactive Members</h4>
+                                    <p>Remove all inactive members (without active loans)</p>
+                                </div>
+                                <button class="btn btn-warning" onclick="confirmDeleteInactiveMembers()">
+                                    <i class="fas fa-user-times"></i> Delete Inactive Members
+                                </button>
+                            </div>
+
+                            <div class="deletion-item">
+                                <div class="item-info">
+                                    <h4>Clear Activity Logs</h4>
+                                    <p>Clear all activity logs older than 6 months</p>
+                                </div>
+                                <button class="btn btn-warning" onclick="confirmClearOldLogs()">
+                                    <i class="fas fa-history"></i> Clear Old Logs
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- System Information -->
+                    <div class="settings-section">
+                        <div class="section-header">
+                            <h3><i class="fas fa-info-circle"></i> System Information</h3>
+                        </div>
+                        <div class="system-info">
+                            <div class="info-item">
+                                <span class="label">System Version:</span>
+                                <span class="value">1.0.0</span>
+                            </div>
+                            <div class="info-item">
+                                <span class="label">Last Backup:</span>
+                                <span class="value" id="lastBackupDate">Never</span>
+                            </div>
+                            <div class="info-item">
+                                <span class="label">Total Records:</span>
+                                <span class="value" id="totalRecords">0</span>
+                            </div>
+                            <div class="info-item">
+                                <span class="label">Data Size:</span>
+                                <span class="value" id="dataSize">0 KB</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- Import Data Modal -->
+    <div id="importDataModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Import Backup Data</h3>
+                <span class="close" onclick="closeImportDataModal()">&times;</span>
+            </div>
+            <div class="import-content">
+                <div class="import-warning">
+                    <i class="fas fa-exclamation-triangle"></i>
+                    <p><strong>Warning:</strong> This will replace all existing data. Make sure to backup your current data first.</p>
+                </div>
+                <div class="file-upload">
+                    <input type="file" id="backupFile" accept=".json" onchange="handleBackupFileSelect(event)">
+                    <label for="backupFile" class="file-upload-label">
+                        <i class="fas fa-cloud-upload-alt"></i>
+                        Choose Backup File (.json)
+                    </label>
+                </div>
+                <div class="form-actions">
+                    <button type="button" class="btn btn-secondary" onclick="closeImportDataModal()">Cancel</button>
+                    <button type="button" class="btn btn-danger" onclick="processDataImport()" id="importDataBtn" disabled>Import Data</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Confirmation Modal -->
+    <div id="confirmModal" class="modal">
+        <div class="modal-content small-modal">
+            <div class="modal-header">
+                <h3 id="confirmTitle">Confirm Action</h3>
+                <span class="close" onclick="closeConfirmModal()">&times;</span>
+            </div>
+            <div class="confirm-content">
+                <p id="confirmMessage">Are you sure you want to proceed?</p>
+                <div class="form-actions">
+                    <button type="button" class="btn btn-secondary" onclick="closeConfirmModal()">Cancel</button>
+                    <button type="button" class="btn btn-danger" id="confirmBtn" onclick="executeConfirmedAction()">Confirm</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="assets/js/app.js"></script>
+    <script src="assets/js/settings.js"></script>
+</body>
+</html>

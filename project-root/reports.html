@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SACCO Loan Management System - Reports</title>
+    <link rel="stylesheet" href="assets/css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <div class="app-container">
+        <!-- Sidebar Navigation -->
+        <nav class="sidebar">
+            <div class="sidebar-header">
+                <h3><i class="fas fa-university"></i> SACCO Admin</h3>
+            </div>
+            <ul class="sidebar-menu">
+                <li><a href="index.html"><i class="fas fa-tachometer-alt"></i> Dashboard</a></li>
+                <li><a href="members.html"><i class="fas fa-users"></i> Members</a></li>
+                <li><a href="loans.html"><i class="fas fa-money-bill-wave"></i> Loans</a></li>
+                <li><a href="reports.html" class="active"><i class="fas fa-chart-bar"></i> Reports</a></li>
+                <li><a href="settings.html"><i class="fas fa-cog"></i> Settings</a></li>
+                <li><a href="activity-logs.html"><i class="fas fa-history"></i> Activity Logs</a></li>
+            </ul>
+        </nav>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- Header -->
+            <header class="header">
+                <h1>Reports & Analytics</h1>
+                <div class="header-actions">
+                    <button class="btn btn-primary" onclick="generateFinancialReport()">
+                        <i class="fas fa-file-alt"></i> Financial Report
+                    </button>
+                    <button class="btn btn-info" onclick="exportAllReports()">
+                        <i class="fas fa-download"></i> Export All
+                    </button>
+                </div>
+            </header>
+
+            <!-- Reports Content -->
+            <div class="page-content">
+                <!-- Report Type Selection -->
+                <div class="report-selection">
+                    <div class="report-tabs">
+                        <button class="tab-btn active" onclick="switchTab('financial')">Financial Summary</button>
+                        <button class="tab-btn" onclick="switchTab('member')">Member Reports</button>
+                        <button class="tab-btn" onclick="switchTab('loan')">Loan Analysis</button>
+                    </div>
+                </div>
+
+                <!-- Financial Summary Tab -->
+                <div id="financial-tab" class="tab-content active">
+                    <div class="financial-summary">
+                        <div class="summary-grid">
+                            <div class="summary-item">
+                                <h4>Total Portfolio</h4>
+                                <div class="amount" id="portfolioTotal">KES 0</div>
+                            </div>
+                            <div class="summary-item">
+                                <h4>Interest Earned</h4>
+                                <div class="amount success" id="interestEarned">KES 0</div>
+                            </div>
+                            <div class="summary-item">
+                                <h4>Outstanding Amount</h4>
+                                <div class="amount warning" id="outstandingAmount">KES 0</div>
+                            </div>
+                            <div class="summary-item">
+                                <h4>Overdue Amount</h4>
+                                <div class="amount danger" id="overdueAmount">KES 0</div>
+                            </div>
+                        </div>
+
+                        <!-- Monthly Performance -->
+                        <div class="chart-section">
+                            <h3>Monthly Performance</h3>
+                            <div class="chart-placeholder">
+                                <canvas id="monthlyChart" width="400" height="200"></canvas>
+                            </div>
+                        </div>
+
+                        <!-- Top Borrowers -->
+                        <div class="top-borrowers">
+                            <h3>Top Borrowers</h3>
+                            <div class="table-container">
+                                <table class="data-table">
+                                    <thead>
+                                        <tr>
+                                            <th>Member</th>
+                                            <th>Total Borrowed</th>
+                                            <th>Active Loans</th>
+                                            <th>Payment Rate</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="topBorrowersTable">
+                                        <!-- Dynamic content -->
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Member Reports Tab -->
+                <div id="member-tab" class="tab-content">
+                    <div class="member-reports">
+                        <div class="report-filters">
+                            <div class="form-group">
+                                <label for="reportMember">Select Member:</label>
+                                <select id="reportMember" onchange="generateMemberReport()">
+                                    <option value="">Select a member</option>
+                                    <!-- Populated dynamically -->
+                                </select>
+                            </div>
+                            <div class="date-range">
+                                <div class="form-group">
+                                    <label for="reportStartDate">From:</label>
+                                    <input type="date" id="reportStartDate" onchange="generateMemberReport()">
+                                </div>
+                                <div class="form-group">
+                                    <label for="reportEndDate">To:</label>
+                                    <input type="date" id="reportEndDate" onchange="generateMemberReport()">
+                                </div>
+                            </div>
+                        </div>
+
+                        <div id="memberReportContent" class="member-report-content" style="display: none;">
+                            <div class="report-header">
+                                <h3 id="memberReportName"></h3>
+                                <button class="btn btn-secondary" onclick="printMemberReport()">
+                                    <i class="fas fa-print"></i> Print Report
+                                </button>
+                            </div>
+
+                            <div class="member-summary">
+                                <div class="summary-row">
+                                    <span class="label">Total Loans Taken:</span>
+                                    <span id="memberTotalLoans">0</span>
+                                </div>
+                                <div class="summary-row">
+                                    <span class="label">Total Amount Borrowed:</span>
+                                    <span id="memberTotalBorrowed">KES 0</span>
+                                </div>
+                                <div class="summary-row">
+                                    <span class="label">Total Repaid:</span>
+                                    <span id="memberTotalRepaid">KES 0</span>
+                                </div>
+                                <div class="summary-row">
+                                    <span class="label">Outstanding Balance:</span>
+                                    <span id="memberOutstanding">KES 0</span>
+                                </div>
+                            </div>
+
+                            <div class="member-loan-history">
+                                <h4>Loan History</h4>
+                                <div class="table-container">
+                                    <table class="data-table">
+                                        <thead>
+                                            <tr>
+                                                <th>Loan ID</th>
+                                                <th>Amount</th>
+                                                <th>Interest Rate</th>
+                                                <th>Issue Date</th>
+                                                <th>Due Date</th>
+                                                <th>Status</th>
+                                                <th>Balance</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody id="memberLoanHistoryTable">
+                                            <!-- Dynamic content -->
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Loan Analysis Tab -->
+                <div id="loan-tab" class="tab-content">
+                    <div class="loan-analysis">
+                        <div class="analysis-grid">
+                            <div class="analysis-card">
+                                <h4>Loan Distribution by Purpose</h4>
+                                <div id="loanPurposeChart" class="chart-placeholder">
+                                    <!-- Chart will be rendered here -->
+                                </div>
+                            </div>
+                            <div class="analysis-card">
+                                <h4>Payment Performance</h4>
+                                <div class="performance-stats">
+                                    <div class="stat">
+                                        <span class="stat-label">On-time Payments:</span>
+                                        <span class="stat-value success" id="onTimePayments">0%</span>
+                                    </div>
+                                    <div class="stat">
+                                        <span class="stat-label">Late Payments:</span>
+                                        <span class="stat-value warning" id="latePayments">0%</span>
+                                    </div>
+                                    <div class="stat">
+                                        <span class="stat-label">Defaulted Loans:</span>
+                                        <span class="stat-value danger" id="defaultedLoans">0%</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="overdue-loans">
+                            <h3>Overdue Loans</h3>
+                            <div class="table-container">
+                                <table class="data-table">
+                                    <thead>
+                                        <tr>
+                                            <th>Loan ID</th>
+                                            <th>Member</th>
+                                            <th>Amount</th>
+                                            <th>Due Date</th>
+                                            <th>Days Overdue</th>
+                                            <th>Outstanding</th>
+                                            <th>Action</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="overdueLoansTable">
+                                        <!-- Dynamic content -->
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/chart.js/3.9.1/chart.min.js"></script>
+    <script src="assets/js/app.js"></script>
+    <script src="assets/js/reports.js"></script>
+</body>
+</html>

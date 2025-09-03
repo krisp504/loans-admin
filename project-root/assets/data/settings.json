@@ -1,0 +1,9 @@
+{
+  "saccoName": "My SACCO",
+  "defaultInterestRate": 10,
+  "currency": "KES",
+  "maxLoanAmount": 1000000,
+  "maxRepaymentPeriod": 60,
+  "lastBackup": null,
+  "systemVersion": "1.0.0"
+}
